@@ -71,7 +71,7 @@ void Square::resize(double ratio){
 void Square::rotate(double angle){
     Point M = center(); // Pivot pour la rotation
     // Conversion de l'angle en degrés vers radians pour les fonctions cos/sin
-    double angle_rad = angle * M_PI / 180.0;
+    double angle_rad = angle * 3.14 / 180.0;
     double cos_a = std::cos(angle_rad);
     double sin_a = std::sin(angle_rad);
 
@@ -124,11 +124,6 @@ Circle Square::circumscribedCircle(){
     double r = std::sqrt(dx*dx + dy*dy);
     return Circle(r, M);       
 }
-
-
-
-
-
 
 
 
