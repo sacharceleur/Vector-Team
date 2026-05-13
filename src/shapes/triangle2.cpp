@@ -25,8 +25,7 @@ double Triangle::area() {
     double determinant = A.x * (B.y - C.y)
                        + B.x * (C.y - A.y)
                        + C.x * (A.y - B.y);
-
-    return abs(determinant) / 2.0;
+    return std::abs(determinant) / 2.0;
 }
 
 Point Triangle::center() {
@@ -69,21 +68,14 @@ void Triangle::resize(double ratio) {
 
 void Triangle::rotate(double angle) {
     Point G = center();
-
-    double oldX = A.x;
-    double oldY = A.y;
-    A.x = G.x + (oldX - G.x) * cos(angle) - (oldY - G.y) * sin(angle);
-    A.y = G.y + (oldX - G.x) * sin(angle) + (oldY - G.y) * cos(angle);
-
-    oldX = B.x;
-    oldY = B.y;
-    B.x = G.x + (oldX - G.x) * cos(angle) - (oldY - G.y) * sin(angle);
-    B.y = G.y + (oldX - G.x) * sin(angle) + (oldY - G.y) * cos(angle);
-
-    oldX = C.x;
-    oldY = C.y;
-    C.x = G.x + (oldX - G.x) * cos(angle) - (oldY - G.y) * sin(angle);
-    C.y = G.y + (oldX - G.x) * sin(angle) + (oldY - G.y) * cos(angle);
+    double cosA = std::cos(angle);
+    double sinA = std::sin(angle);
+    for (Point* p : {&A, &B, &C}) {
+        double oldX = p->x;
+        double oldY = p->y;
+        p->x = G.x + (oldX - G.x) * cosA - (oldY - G.y) * sinA;
+        p->y = G.y + (oldX - G.x) * sinA + (oldY - G.y) * cosA;
+    }
 }
 
 bool Triangle::equals(Triangle triangle) {
@@ -97,9 +89,9 @@ bool Triangle::isRightAngled() {
     double BC = B.distance(C);
     double CA = C.distance(A);
 
-    return abs(AB * AB + BC * BC - CA * CA) < EPS ||
-           abs(AB * AB + CA * CA - BC * BC) < EPS ||
-           abs(BC * BC + CA * CA - AB * AB) < EPS;
+    return std::abs(AB * AB + BC * BC - CA * CA) < EPS ||
+           std::abs(AB * AB + CA * CA - BC * BC) < EPS ||
+           std::abs(BC * BC + CA * CA - AB * AB) < EPS;
 }
 
 bool Triangle::isEquilateral() {
@@ -107,8 +99,8 @@ bool Triangle::isEquilateral() {
     double BC = B.distance(C);
     double CA = C.distance(A);
 
-    return abs(AB - BC) < EPS &&
-           abs(BC - CA) < EPS;
+    return std::abs(AB - BC) < EPS &&
+           std::abs(BC - CA) < EPS;
 }
 
 bool Triangle::isIsoceles() {
@@ -116,9 +108,9 @@ bool Triangle::isIsoceles() {
     double BC = B.distance(C);
     double CA = C.distance(A);
 
-    return abs(AB - BC) < EPS ||
-           abs(BC - CA) < EPS ||
-           abs(CA - AB) < EPS;
+    return std::abs(AB - BC) < EPS ||
+           std::abs(BC - CA) < EPS ||
+           std::abs(CA - AB) < EPS;
 }
 
 Circle Triangle::inscribedCircle() {
@@ -143,7 +135,7 @@ Circle Triangle::circumscribedCircle() {
              + B.x * (C.y - A.y)
              + C.x * (A.y - B.y));
 
-    if (abs(d) < EPS) {
+    if (std::abs(d) < EPS) {
         return Circle(0, center());
     }
 
@@ -163,4 +155,5 @@ Circle Triangle::circumscribedCircle() {
 
     return Circle(O.distance(A), O);
 }
+
 
