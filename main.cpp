@@ -2,9 +2,16 @@
 #include "point.hpp"
 #include "shapes.hpp"
 #include <vector>
+#include <iostream>
+#include <cmath>
+#include "tests.hpp"
+#include "tests.cpp"
 
 
 int main() {
+	test_circle();
+	test_triangle();
+	test_square();
 	
 	// Define points in a vector
 	std::vector<Point> points = {
